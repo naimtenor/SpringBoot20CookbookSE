@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import com.example.bookpub.repository.BookRepository;
 
@@ -25,6 +26,12 @@ public class StartupRunner implements CommandLineRunner {
 	private BookRepository bookRepository;
 
 	public void run(String... args) throws Exception {
+		logger.info("책의 개수 : " + bookRepository.count());
+	}
+	
+	// 예약 작업 실행기를 사용한 주기적 책의 개수 출력
+	@Scheduled(initialDelay = 1000, fixedRate = 10000)
+	public void run() {
 		logger.info("책의 개수 : " + bookRepository.count());
 	}
 }
