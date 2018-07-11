@@ -1,24 +1,43 @@
 package com.example.bookpub.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.bookpub.editors.IsbnEditor;
 import com.example.bookpub.entity.Book;
+import com.example.bookpub.entity.Publisher;
 import com.example.bookpub.entity.Reviewer;
 import com.example.bookpub.model.Isbn;
 import com.example.bookpub.repository.BookRepository;
+import com.example.bookpub.repository.PublisherRepository;
 
 @RestController
 @RequestMapping("/books")
 public class BookController {
     @Autowired
     private BookRepository bookRepository;
+    
+    @Autowired
+    private PublisherRepository publisherRepository;
+    
+    @RequestMapping(value = "/publisher/{id}", method = RequestMethod.GET)
+    public List<Book> getBooksByPublisher(@PathVariable("id") Long id) {
+        Optional<Publisher> publisher = publisherRepository.findById(id);
+        Assert.notNull(publisher);
+        Assert.isTrue(publisher.isPresent());
+        return publisher.get().getBooks();
+    }
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

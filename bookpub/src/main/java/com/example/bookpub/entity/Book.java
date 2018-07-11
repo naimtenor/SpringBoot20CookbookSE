@@ -1,94 +1,88 @@
 package com.example.bookpub.entity;
 
+import javax.persistence.*;
 import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Book {
+    @Id
+    @GeneratedValue
+    private Long id;
+    private String isbn;
+    private String title;
+    private String description;
 
-	@Id
-	@GeneratedValue
-	private Long id;
-	private String isbn;
-	private String title;
-	private String description;
-	
-	@ManyToOne
-	private Author author;
-	@ManyToOne
-	private Publisher publisher;
-	
-	@ManyToMany
-	private List<Reviewer> reviewers;
-	
-	protected Book() {}
+    @ManyToOne
+    private Author author;
 
-	public Book(String isbn, String title, Author author, Publisher publisher) {
-		super();
-		this.isbn = isbn;
-		this.title = title;
-		this.author = author;
-		this.publisher = publisher;
-	}
+    @ManyToOne
+    private Publisher publisher;
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToMany
+    private List<Reviewer> reviewers;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    protected Book() {}
 
-	public String getIsbn() {
-		return isbn;
-	}
+    public Book(String isbn, String title, Author author, Publisher publisher) {
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.publisher = publisher;
+    }
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getIsbn() {
+        return isbn;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public Author getAuthor() {
-		return author;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setAuthor(Author author) {
-		this.author = author;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public Publisher getPublisher() {
-		return publisher;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setPublisher(Publisher publisher) {
-		this.publisher = publisher;
-	}
+    public Author getAuthor() {
+        return author;
+    }
 
-	public List<Reviewer> getReviewers() {
-		return reviewers;
-	}
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 
-	public void setReviewers(List<Reviewer> reviewers) {
-		this.reviewers = reviewers;
-	}
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public List<Reviewer> getReviewers() {
+        return reviewers;
+    }
+
+    public void setReviewers(List<Reviewer> reviewers) {
+        this.reviewers = reviewers;
+    }
 }
