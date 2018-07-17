@@ -38,13 +38,13 @@ public class StartupRunner implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
 		//logger.info("책의 개수 : " + bookRepository.count());
-		logger.info("도서 관리 시스템에 오신 것을 환영합니다.");
-        Author author = new Author("Alex", "Antonov");
-        author = authorRepository.save(author);
-        Publisher publisher = new Publisher("Packt");
-        publisher = publisherRepository.save(publisher);
-        Book book = new Book("978-1-78528-415-1", "Spring Boot Recipes", author, publisher);
-        bookRepository.save(book);
+//		logger.info("도서 관리 시스템에 오신 것을 환영합니다.");
+//        Author author = new Author("Alex", "Antonov");
+//        author = authorRepository.save(author);
+//        Publisher publisher = new Publisher("Packt");
+//        publisher = publisherRepository.save(publisher);
+//        Book book = new Book("978-1-78528-415-1", "Spring Boot Recipes", author, publisher);
+//        bookRepository.save(book);
 	}
 	
 	// 예약 작업 실행기를 사용한 주기적 책의 개수 출력
