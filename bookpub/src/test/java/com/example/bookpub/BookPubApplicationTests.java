@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import javax.sql.DataSource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
@@ -30,23 +34,36 @@ public class BookPubApplicationTests {
 	@Autowired
 	private WebApplicationContext context;
 	@Autowired
+	private BookRepository repository;
+	@Autowired
 	private TestRestTemplate restTemplate;
 	@Autowired
-	private BookRepository repository;
+	private DataSource ds;
 
 	@LocalServerPort
 	private int port;
 
 	private MockMvc mockMvc;
+	private static boolean loadDataFixtures = true;
 
 	@Before
 	public void setupMockMvc() {
 		mockMvc = webAppContextSetup(context).build();
 	}
+	
+	@Before
+	public void loadDataFixtures() {
+		if (loadDataFixtures) {
+			ResourceDatabasePopulator populator = new ResourceDatabasePopulator(
+					context.getResource("classpath:/test-data.sql"));
+			DatabasePopulatorUtils.execute(populator, ds);
+			loadDataFixtures = false;
+		}
+	}
 
 	@Test
 	public void contextLoads() {
-		assertEquals(1, repository.count());
+		assertEquals(3, repository.count());
 	}
 
 	@Test
@@ -61,6 +78,6 @@ public class BookPubApplicationTests {
 		mockMvc.perform(get("/books/publisher/1")).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.parseMediaType("application/json;charset=UTF-8")))
 				.andExpect(content().string(containsString("Packt")));
-				//.andExpect(jsonPath("$.name").value("Packt"));
+//				.andExpect(jsonPath("$.name").value("Packt"));
 	}
 }
