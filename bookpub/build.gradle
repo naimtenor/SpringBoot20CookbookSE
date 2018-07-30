@@ -25,11 +25,17 @@ repositories {
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-jdbc')
-	compile("org.springframework.boot:spring-boot-starter-web")
-	compile("org.springframework.boot:spring-boot-starter-data-rest")
-	
-	runtime('com.h2database:h2')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-jdbc")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-data-rest")
+    //compile project(":db-count-starter")
+
+    runtime("com.h2database:h2")
+    runtime("mysql:mysql-connector-java")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("info.cukes:cucumber-spring:1.2.5")
+    testCompile("info.cukes:cucumber-java8:1.2.5")
+    testCompile("info.cukes:cucumber-junit:1.2.5")
 }
